@@ -11,11 +11,16 @@ from PyQt5.QtCore import QThread, pyqtSignal, pyqtSlot
 from PyQt5.QtGui import QImage, QPixmap
 from PyQt5.QtWidgets import QApplication, QMainWindow
 from PyQt5.uic import loadUi
-
+from random import randint
 
 directory = os.path.join(os.path.dirname(__file__), '..')
 output_image = os.path.join(directory, 'recognition', 'output_photos', 'output.jpg')
 retrained_labels = os.path.join(directory, 'recognition', 'retrained_labels.txt')
+
+rock_image = os.path.join(directory, 'computer_moves', 'rock.jpg')
+paper_image = os.path.join(directory, 'computer_moves', 'paper.jpg')
+scissors_image = os.path.join(directory, 'computer_moves', 'scissors.jpg')
+computer_pictures = [paper_image, rock_image, scissors_image]
 
 
 class CaptureThread(QThread):
@@ -26,9 +31,9 @@ class CaptureThread(QThread):
         while True:
             ret, frame = cap.read()
             if ret:
-                self.update(frame)
+                self.update_frame(frame)
 
-    def update(self, frame):
+    def update_frame(self, frame):
         hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
         # define range of blue color in HSV
@@ -68,6 +73,8 @@ class RPSGame(QMainWindow):
     def __init__(self):
         super(RPSGame, self).__init__()
         loadUi('window.ui', self)
+        self.labels = recognition.load_labels(retrained_labels)
+        self.should_update = True
         self.timer_thread = None
         self.latest_image = None
         self.thread = CaptureThread(self)
@@ -80,24 +87,49 @@ class RPSGame(QMainWindow):
         self.thread.start()
 
     def start_game(self):
+        self.should_update = True
         self.timer_thread = CountDownThread()
         self.timer_thread.update_timer.connect(self.countdown)
         self.timer_thread.start()
 
     @pyqtSlot(QImage)
     def display_image(self, image):
-        self.latest_image = image
-        self.videoDisplay.setPixmap(QPixmap.fromImage(image))
+        if self.should_update:
+            self.latest_image = image
+            self.videoDisplay.setPixmap(QPixmap.fromImage(image))
 
     @pyqtSlot(int)
     def countdown(self, time):
         self.timeLabel.setText(str(time))
         if time == 0:
+            self.should_update = False
             self.write_picture()
-            value = recognition.identify_image(output_image)
+            player_move = recognition.identify_image(output_image)
+            computer_move = self.get_random_move()
+            self.update_ui(player_move, computer_move)
+
+    def update_ui(self, player_move, computer_move):
+        player_move_name = self.labels[player_move]
+        computer_move_name = self.labels[computer_move]
+        self.playerMoveLabel.setText(player_move_name)
+        self.computerMoveLabel.setText(computer_move_name)
+        self.display_computer_move(computer_move)
+
+    def display_computer_move(self, computer_move):
+        pixmap = QPixmap(computer_pictures[computer_move])
+        self.enemyDisplay.setPixmap(pixmap)
+        self.enemyDisplay.show()
+
+    def get_random_move(self):
+        return randint(0, 2)
 
     def write_picture(self):
         self.latest_image.save(output_image)
+
+    # 0 = player, 1 = cpu, 2 = tie
+    def get_winner(self, player_move, computer_move):
+        pass
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
