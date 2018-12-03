@@ -17,9 +17,9 @@ directory = os.path.join(os.path.dirname(__file__), '..')
 output_image = os.path.join(directory, 'recognition', 'output_photos', 'output.jpg')
 retrained_labels = os.path.join(directory, 'recognition', 'retrained_labels.txt')
 
-rock_image = os.path.join(directory, 'computer_moves', 'rock.jpg')
-paper_image = os.path.join(directory, 'computer_moves', 'paper.jpg')
-scissors_image = os.path.join(directory, 'computer_moves', 'scissors.jpg')
+rock_image = os.path.join(directory, 'computer_moves', 'rock.png')
+paper_image = os.path.join(directory, 'computer_moves', 'paper.png')
+scissors_image = os.path.join(directory, 'computer_moves', 'scissors.png')
 computer_pictures = [paper_image, rock_image, scissors_image]
 
 winner_text = ['You Win!', 'Computer Wins!', 'It\'s a tie!']
