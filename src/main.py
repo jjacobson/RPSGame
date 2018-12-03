@@ -22,6 +22,7 @@ paper_image = os.path.join(directory, 'computer_moves', 'paper.jpg')
 scissors_image = os.path.join(directory, 'computer_moves', 'scissors.jpg')
 computer_pictures = [paper_image, rock_image, scissors_image]
 
+winner_text = ['You Win!', 'Computer Wins!', 'It\'s a tie!']
 
 class CaptureThread(QThread):
     update_pixmap = pyqtSignal(QImage)
@@ -74,6 +75,7 @@ class RPSGame(QMainWindow):
         super(RPSGame, self).__init__()
         loadUi('window.ui', self)
         self.labels = recognition.load_labels(retrained_labels)
+        self.outputLabel.setText('Press play \nto begin')
         self.should_update = True
         self.timer_thread = None
         self.latest_image = None
@@ -91,6 +93,7 @@ class RPSGame(QMainWindow):
         self.timer_thread = CountDownThread()
         self.timer_thread.update_timer.connect(self.countdown)
         self.timer_thread.start()
+        self.clear_ui()
 
     @pyqtSlot(QImage)
     def display_image(self, image):
@@ -100,7 +103,7 @@ class RPSGame(QMainWindow):
 
     @pyqtSlot(int)
     def countdown(self, time):
-        self.timeLabel.setText(str(time))
+        self.outputLabel.setText(str(time))
         if time == 0:
             self.should_update = False
             self.write_picture()
@@ -114,6 +117,13 @@ class RPSGame(QMainWindow):
         self.playerMoveLabel.setText(player_move_name)
         self.computerMoveLabel.setText(computer_move_name)
         self.display_computer_move(computer_move)
+        winner = self.get_winner(player_move, computer_move)
+        self.outputLabel.setText(winner_text[winner])
+
+    def clear_ui(self):
+        self.playerMoveLabel.setText('')
+        self.computerMoveLabel.setText('')
+        self.enemyDisplay.clear()
 
     def display_computer_move(self, computer_move):
         pixmap = QPixmap(computer_pictures[computer_move])
@@ -128,7 +138,7 @@ class RPSGame(QMainWindow):
 
     # 0 = player, 1 = cpu, 2 = tie
     def get_winner(self, player_move, computer_move):
-        pass
+        return 0
 
 
 if __name__ == '__main__':
