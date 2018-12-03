@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1144</width>
-    <height>609</height>
+    <width>1152</width>
+    <height>608</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -56,6 +56,11 @@
          </item>
          <item>
           <widget class="QLabel" name="label_2">
+           <property name="font">
+            <font>
+             <pointsize>12</pointsize>
+            </font>
+           </property>
            <property name="text">
             <string>Your Move</string>
            </property>
@@ -105,6 +110,11 @@
          </item>
          <item>
           <widget class="QLabel" name="label">
+           <property name="font">
+            <font>
+             <pointsize>12</pointsize>
+            </font>
+           </property>
            <property name="text">
             <string>Enemy Move</string>
            </property>
@@ -160,6 +170,11 @@
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
             <property name="text">
              <string/>
             </property>
@@ -182,19 +197,24 @@
            <item>
             <widget class="QLabel" name="outputLabel">
              <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+              <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
              <property name="minimumSize">
               <size>
-               <width>45</width>
+               <width>60</width>
                <height>0</height>
               </size>
              </property>
+             <property name="font">
+              <font>
+               <pointsize>12</pointsize>
+              </font>
+             </property>
              <property name="text">
-              <string/>
+              <string>Its a Tie</string>
              </property>
              <property name="alignment">
               <set>Qt::AlignCenter</set>
@@ -232,6 +252,11 @@
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
             </property>
             <property name="text">
              <string/>
@@ -272,6 +297,11 @@
          </item>
          <item>
           <widget class="QPushButton" name="playButton">
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
            <property name="text">
             <string>Play Game</string>
            </property>
