@@ -24,6 +24,7 @@ computer_pictures = [paper_image, rock_image, scissors_image]
 
 winner_text = ['You Win!', 'Computer Wins!', 'It\'s a tie!']
 
+
 class CaptureThread(QThread):
     update_pixmap = pyqtSignal(QImage)
 
