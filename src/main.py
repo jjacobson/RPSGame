@@ -138,7 +138,20 @@ class RPSGame(QMainWindow):
 
     # 0 = player, 1 = cpu, 2 = tie
     def get_winner(self, player_move, computer_move):
-        return 0
+        if player_move == computer_move:
+            return 2
+        elif player_move == 0 and computer_move == 1:
+            return 0
+        elif player_move == 1 and computer_move == 0:
+            return 1
+        elif player_move == 0 and computer_move == 2:
+            return 1
+        elif player_move == 2 and computer_move == 0:
+            return 0
+        elif player_move == 1 and computer_move == 2:
+            return 0
+        elif player_move == 2 and computer_move == 1:
+            return 1
 
 
 if __name__ == '__main__':
