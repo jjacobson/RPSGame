@@ -43,9 +43,9 @@ The resulting program was able to successfully recognize all three moves when an
 
 We found that the accuracy of the recognition greatly depended on the amount of background noise in the image. We analyzed the accuracy of the recognition in various scenarios resulting in the following accuracy data:
 
-Hand over white background: 95%\
-Hand over white background with upper body included: 90%\
-Hand over average room background: 80%\
+Hand over white background: 95%<br/>
+Hand over white background with upper body included: 90%<br/>
+Hand over average room background: 80%<br/>
 Hand over average room with upper body included: 75%
 
 Overall, the recognition was much more successful than we had originally expected considering the small number of images that it was trained on.
